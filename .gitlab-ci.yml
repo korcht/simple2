@@ -1,0 +1,58 @@
+image: docker:stable
+
+stages:
+  - build
+
+variables:
+  MYSQL_DATABASE: homestead
+  MYSQL_ROOT_PASSWORD: secret
+  DB_HOST: mysql
+  DB_USERNAME: root
+  DB_PASSWORD: secret
+  DB_DATABASE: homestead
+
+build:
+  stage: build
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  script:
+    - docker login git.gob.cl:4567 -u gitlab-ci-token -p $CI_BUILD_TOKEN
+    - docker build -t git.gob.cl:4567/simple/simple -t git.gob.cl:4567/simple/simple:v29-$CI_COMMIT_REF_NAME .
+    - docker push git.gob.cl:4567/simple/simple
+    - docker push git.gob.cl:4567/simple/simple:v29-$CI_COMMIT_REF_NAME
+  only:
+    - master
+    - staging
+    - staging_abenis
+    - comisariavirtual
+    - staging_comisaria
+    - kubernetes
+    - insert_masivo
+
+
+build site:
+  stage: build
+  image: node:10.24.1-buster-slim
+  # image: node:10-stretch
+  script:
+    # - apt-get update
+    # - apt-get -y install libpng16-16 libpng-tools libpng-dev
+    #- npm prune
+    #- npm i npm@latest -g
+    # - npm i npm@6.14.11
+    - npm install
+    - npm audit fix
+    # - npm audit fix --force
+    - npm run prod --verbose
+    #- curl -o- -L https://yarnpkg.com/install.sh | bash
+    #- export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+    #- apt install yarn -y
+    #- yarn run prod
+  artifacts:
+    expire_in: 30 days
+    paths:
+      - public/*
+

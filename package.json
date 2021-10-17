@@ -1,0 +1,40 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "ajv": "^6.12.6",
+        "axios": "^0.21",
+        "bootstrap": "^4.6.0",
+        "jquery": "^3.6.0",
+        "jquery-ui-dist": "^1.12.1",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "node-sass": "^6.0.1",
+        "popper.js": "^1.16.1",
+        "resolve-url-loader": "^4.0.0",
+        "sass": "~1.32.13",
+        "sass-loader": "^12.1.0",
+        "vue": "^2.5.7",
+        "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "bootstrap-timepicker": "^0.5.2",
+        "bootstrap4-datetimepicker": "^5.2.3",
+        "bootstrap4c-chosen": "^1.1.1",
+        "chosen-js": "^1.8.7",
+        "datatables": "^1.10.18",
+        "highcharts": "^9.1.2",
+        "jsplumb": "^2.15.6",
+        "moment": "^2.29.1",
+        "select2": "*",
+        "timepicker": "^1.13.18"
+    }
+}

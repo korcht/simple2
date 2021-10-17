@@ -1,0 +1,11 @@
+FROM node:12 as build
+WORKDIR /app
+RUN apt update
+COPY . .
+RUN npm install
+RUN npm audit fix
+RUN npm run production --verbose
+
+FROM public.ecr.aws/nginx/nginx:latest
+COPY --from=build /app/public /var/www/simple/public
+EXPOSE 80
